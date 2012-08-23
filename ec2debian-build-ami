@@ -27,7 +27,7 @@ apt_mirror=
 # Hardcoded params.
 # This script would explode if we had to take care of other distributions
 distribution='debian'
-codename='squeeze'
+codename='wheezy'
 ami_name_suffix=$(date +%Y%m%d)
 description=
 
@@ -38,7 +38,7 @@ availability_zone=
 
 # Volume and AMI info
 # Filesystem, hardcoded for now, maybe we'll add a parameter later on
-filesystem='xfs'
+filesystem='ext4'
 mountoptions=
 volume_size='1'
 device_path=
@@ -119,7 +119,7 @@ true ${AWS_USER_ID:?} ${AWS_ACCESS_KEY_ID:?} ${AWS_SECRET_ACCESS_KEY:?} \
 		${EC2_CERT:?} ${EC2_PRIVATE_KEY:?}
 
 # Check the architecture
-[[ $arch != 'amd64' && $arch != 'i386' ]] && die "Unrecognized architecture: $arch"
+[[ $arch != 'amd64' ]] && die "Unrecognized architecture: $arch"
 
 # Quit if we can't find the certificate
 [ ! -f "$EC2_CERT" ] && die "AWS certificate file not found:" "$EC2_CERT"
