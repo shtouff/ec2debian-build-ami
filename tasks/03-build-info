@@ -5,6 +5,7 @@ log \
 	"architecture:      $arch" \
 	"filesystem:        $filesystem" \
 	"volume size:       $volume_size GB" \
+	"volume backing:    $volume_backing" \
 	"locale:            $locale" \
 	"charmap:           $charmap" \
 	"timezone:          $timezone" \
