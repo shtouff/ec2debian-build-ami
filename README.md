@@ -1,10 +1,10 @@
-# debian "squeeze" bootstrapping script for EC2 #
+# debian "wheezy" bootstrapping script for EC2 #
 
-This is a fork of camptocamps bootstrapping script for EC2 AMIs.  
+This is a fork of andsens script for EC2 AMIs.  
 It creates a vanilla debian squeeze machine image, no latent logfiles no .bash_history or even apt package cache.  
 The machine configuration this script creates has been thoroughly tested.
 
-*This script is only tested on debian squeeze.*
+*This script is only tested on debian wheezy (and not terribly well).*
 *You will need an EC2 server to run this bootstrapper.*
 
 ## Usage ##
@@ -15,9 +15,9 @@ I recommend setting them via an [environment script](#environment-script), this 
 
 There are no interactive prompts, the bootstrapping can run entirely unattended from start till finish.
 
-Some plugins are included in the [plugins directory](https://github.com/andsens/ec2debian-build-ami/tree/master/plugins).
+Some plugins are included in the [plugins directory](https://github.com/sigil66/ec2debian-build-ami/tree/master/plugins).
 A list of external plugins is also provided there.  
-If none of those scratch your itch, you can of course [write your own plugin](https://github.com/andsens/ec2debian-build-ami/blob/master/plugins/HOWTO.md).
+If none of those scratch your itch, you can of course [write your own plugin](https://github.com/sigil66/ec2debian-build-ami/blob/master/plugins/HOWTO.md).
 
 ## Features ##
 
@@ -34,7 +34,6 @@ If none of those scratch your itch, you can of course [write your own plugin](ht
 
 * EBS volume is automatically created, mounted, formatted, unmounted, "snapshotted" and deleted
 * AMI is automatically registered with the right kernels for the current region of the host machine
-* Can create both 32-bit and 64-bit AMIs
 * Plugin system to keep the bootstrapping process automated
 * Custom packages
 * The process is divided into simple task based scripts
