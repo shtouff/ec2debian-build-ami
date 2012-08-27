@@ -1,7 +1,7 @@
 # debian "wheezy" bootstrapping script for EC2 #
 
 This is a fork of andsens script for EC2 AMIs.  
-It creates a vanilla debian squeeze machine image, no latent logfiles no .bash_history or even apt package cache.  
+It creates a vanilla debian wheezy machine image, no latent logfiles no .bash_history or even apt package cache.  
 The machine configuration this script creates has been thoroughly tested.
 
 *This script is only tested on debian wheezy (and not terribly well).*

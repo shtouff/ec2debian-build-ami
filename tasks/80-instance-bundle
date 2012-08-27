@@ -1,0 +1,19 @@
+#!/bin/bash
+# Create a bundle of the EBS volume and upload
+if [ $volume_backing == 'instance' ]; then
+	log "Unmounting the volume"
+	ec2-bundle-vol -d /mnt -s $(($volume_size*1024)) -v $imagedir -r x86_64
+	
+	log "Unmounting the volume"
+	umount $imagedir
+	
+	logn "Detaching the volume"
+	attachment_status=`ec2-detach-volume $volume_id | grep 'available' || true`
+	dotdot "$attachment_status" "ec2dvol $volume_id -F 'status=available' || true"
+
+	log "Deleting the volume"
+	ec2-delete-volume $volume_id || true
+	
+	log "Uploading bundle"
+	ec2-upload-bundle -b ami-builds -m /mnt/image.manifest.xml
+fi
