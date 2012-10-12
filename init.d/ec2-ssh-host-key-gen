@@ -40,12 +40,14 @@ fi
 rm -f /etc/ssh/ssh_host_*_key*
 ssh-keygen -f /etc/ssh/ssh_host_rsa_key -t rsa -C 'host' -N ''
 ssh-keygen -f /etc/ssh/ssh_host_dsa_key -t dsa -C 'host' -N ''
+ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -t ecdsa -C 'host' -N ''
 
 # This allows user to get host keys securely through console log
 echo "-----BEGIN SSH HOST KEY FINGERPRINTS-----"  | logger -st "ec2" 
 ssh-keygen -l -f /etc/ssh/ssh_host_key.pub        | logger -st "ec2" 
 ssh-keygen -l -f /etc/ssh/ssh_host_rsa_key.pub    | logger -st "ec2"
 ssh-keygen -l -f /etc/ssh/ssh_host_dsa_key.pub    | logger -st "ec2"
+ssh-keygen -l -f /etc/ssh/ssh_host_ecdsa_key.pub    | logger -st "ec2"
 echo "-----END SSH HOST KEY FINGERPRINTS-----"    | logger -st "ec2" 
 
 # Don't run again on this instance
