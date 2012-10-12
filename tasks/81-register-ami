@@ -1,0 +1,65 @@
+#!/bin/bash
+# Register the snapshot as a new AMI
+
+# Figure out which pvGrub kernel ID we need
+case $region in
+	eu-west-1)
+		[ $arch = 'amd64' ] && aki="aki-71665e05"
+	;;
+	us-east-1)
+		[ $arch = 'amd64' ] && aki="aki-88aa75e1"
+	;;
+	us-west-1)
+		[ $arch = 'amd64' ] && aki="aki-f77e26b2"
+	;;
+	us-west-2)
+		[ $arch = 'amd64' ] && aki="aki-fc37bacc"
+	;;
+	ap-northeast-1)
+		[ $arch = 'amd64' ] && aki="aki-44992845"
+	;;
+	ap-southeast-1)
+		[ $arch = 'amd64' ] && aki="aki-fe1354ac"
+	;;
+	sa-east-1)
+		[ $arch = 'amd64' ] && aki="aki-c48f51d9"
+	;;
+	us-gov-west-1)
+		[ $arch = 'amd64' ] && aki="aki-79a4c05a"
+	;;
+	*) die "Unrecognized region:" "$region"
+esac
+
+
+[ $arch = 'amd64' ] && ami_arch='x86_64'
+
+# The AMI has to start with "debian", otherwise we won't get a nice icon
+ami_name="$distribution-$codename-$arch-$ami_name_suffix"
+log "Registering the snapshot '$snapshot_id' as an AMI"
+ami_id=`ec2-register \
+	--name "$ami_name" --description "$description" \
+	--architecture "$ami_arch" --kernel "$aki" \
+	--block-device-mapping '/dev/sda2=ephemeral0' \
+	--block-device-mapping '/dev/sda3=ephemeral1' \
+	--block-device-mapping '/dev/sdb=ephemeral2' \
+	--block-device-mapping '/dev/sdc=ephemeral3' \
+	--block-device-mapping '/dev/sdd=ephemeral4' \
+	--block-device-mapping '/dev/sde=ephemeral5' \
+	--snapshot "$snapshot_id" | awk '{print $2}'`
+
+# If the user has already created an AMI today, this will fail, so give the AMI registration command to the user
+if [ -z "$ami_id" ]; then
+	die \
+		"Unable to register the snapshot as an AMI." \
+		"You can do it manually with:\nec2-register" \
+		"--name '$ami_name' --description '$description' \\\\\n" \
+		"--architecture '$ami_arch' --kernel '$aki' \\\\\n" \
+		"--block-device-mapping '/dev/sda2=ephemeral0' \\\\\n" \
+		"--block-device-mapping '/dev/sda3=ephemeral1' \\\\\n" \
+		"--block-device-mapping '/dev/sdb=ephemeral2' \\\\\n" \
+		"--block-device-mapping '/dev/sdc=ephemeral3' \\\\\n" \
+		"--block-device-mapping '/dev/sdd=ephemeral4' \\\\\n" \
+		"--block-device-mapping '/dev/sde=ephemeral5' \\\\\n" \
+		"--snapshot '$snapshot_id'"
+fi
+log "Your AMI has been created with the ID $ami_id"

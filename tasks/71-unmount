@@ -21,7 +21,5 @@ while [ -n "`lsof $imagedir`" ]; do
 	sleep 5
 done
 
-if [ $volume_backing == 'ebs' ]; then
-	log "Unmounting the volume"
-	umount $imagedir
-fi
+log "Unmounting the volume"
+umount $imagedir

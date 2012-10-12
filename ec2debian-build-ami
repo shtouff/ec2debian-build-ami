@@ -144,8 +144,8 @@ TASK_MOUNT="15-mount"
 TASK_APTSOURCES="21-apt-sources"
 TASK_INITSCRIPTS="51-init-scripts"
 TASK_UNMOUNT="71-unmount"
-TASK_SNAPSHOT="81-ebs-snapshot"
-TASK_CREATEAMI="82-register-ami"
+TASK_SNAPSHOT="80-ebs-snapshot"
+TASK_CREATEAMI="81-register-ami"
 
 # Invoke plugins so that they may reorder and add tasks
 for plugin in "${plugins[@]}"; do
